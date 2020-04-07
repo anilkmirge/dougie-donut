@@ -12,15 +12,16 @@ for (let i = 0; i < buttons.length; i++) {
 		divElt.appendChild(loadText);
 		const borough = evt.currentTarget.value.toUpperCase();
 		const inputValue = document.querySelector('#numOfComplaints').value;
-		let limit = 10; //default if input text is empty
 		const agency = 'NYPD';
-		if (!inputValue || isNaN(inputValue)) {
+		if (isNaN(inputValue)) {
 			divElt.innerHTML = '';
 			console.log('Bad input! Please enter a valid positive number');
 			alert('Bad input! Please enter a valid positive number');
 		} else {
-			limit = inputValue;
-			const url = `https://data.cityofnewyork.us/resource/erm2-nwe9.json?borough=${borough}&$limit=${limit}&agency=${agency}&$order=descriptor ASC`;
+			let limit = inputValue;
+			const url = `https://data.cityofnewyork.us/resource/erm2-nwe9.json?borough=${borough}&$limit=${
+				limit || 10
+			}&agency=${agency}&$order=descriptor ASC`;
 			fetch(url)
 				.then((res) => {
 					return res.json();
